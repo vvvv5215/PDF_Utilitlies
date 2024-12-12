@@ -11,38 +11,41 @@
             font-family: 'Roboto', sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #121212;
+            background-color: #1a1a1a; /* dark background */
             color: #e0e0e0;
         }
 
         header {
-            background-color: #1f1f1f;
-            color: #ffffff;
+            background-color: #222222; /* dark grey background */
+            color: #00f5e8; /* neon cyan text */
             padding: 20px 10px;
             text-align: center;
             font-size: 24px;
+            text-shadow: 0 0 10px #00f5e8; /* glowing effect */
         }
 
         main {
             max-width: 800px;
             margin: 20px auto;
             padding: 20px;
-            background: #2c2c2c;
+            background: #121212; /* almost black background */
             border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 255, 255, 0.1); /* subtle glow */
         }
 
         h1 {
             font-size: 28px;
             margin-bottom: 20px;
-            color: #4CAF50;
+            color: #00f5e8; /* neon cyan */
+            text-shadow: 0 0 10px #00f5e8;
         }
 
         h2 {
             font-size: 20px;
             margin-top: 20px;
             margin-bottom: 10px;
-            color: #e0e0e0;
+            color: #00f5e8; /* neon cyan */
+            text-shadow: 0 0 10px #00f5e8;
         }
 
         .form-group {
@@ -60,33 +63,43 @@
             width: 100%;
             padding: 10px;
             margin-bottom: 10px;
-            border: 1px solid #555;
+            border: 1px solid #444; /* dark border */
             border-radius: 4px;
-            background-color: #333;
+            background-color: #2a2a2a; /* dark background */
             color: #e0e0e0;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.5); /* glowing border */
+        }
+
+        input[type="file"]:focus, input[type="number"]:focus {
+            outline: none;
+            border-color: #00f5e8; /* neon cyan border on focus */
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8); /* glowing effect */
         }
 
         button {
-            background-color: #ff5722;
-            color: white;
+            background-color: #00f5e8; /* neon cyan */
+            color: #222222; /* dark text */
             border: none;
             padding: 10px 15px;
             border-radius: 4px;
             font-size: 16px;
             cursor: pointer;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.8); /* glowing button */
         }
 
         button:hover {
-            background-color: #e64a19;
+            background-color: #00e6cc; /* brighter cyan on hover */
+            box-shadow: 0 0 15px rgba(0, 255, 255, 1);
         }
 
         .message {
             margin-bottom: 20px;
             padding: 10px;
             border-radius: 4px;
-            background-color: #3c763d;
-            color: #f1f1f1;
+            background-color: #333333; /* dark background for message */
+            color: #00f5e8; /* neon cyan text */
             font-size: 14px;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.3); /* glowing effect */
         }
 
         footer {
@@ -98,19 +111,26 @@
 
         .social-buttons button {
             margin: 5px;
-            background-color: #007bff;
+            background-color: #007bff; /* blue button */
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.4); /* glowing blue */
         }
 
         .social-buttons button:hover {
-            background-color: #0056b3;
+            background-color: #0056b3; /* darker blue on hover */
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* glowing blue on hover */
         }
 
         .social-buttons button:nth-child(2) {
-            background-color: #0e76a8;
+            background-color: #0e76a8; /* LinkedIn blue */
         }
 
         .social-buttons button:nth-child(2):hover {
             background-color: #084a71;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); /* glowing LinkedIn effect */
         }
 
         .social-buttons {
