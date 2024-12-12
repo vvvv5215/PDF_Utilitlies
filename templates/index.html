@@ -4,46 +4,176 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PDF Utilities</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+    <link rel="stylesheet" href="styles.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f9f9f9;
+            color: #333;
+        }
+
+        header {
+            background-color: #4CAF50;
+            color: white;
+            padding: 20px 10px;
+            text-align: center;
+            font-size: 24px;
+        }
+
+        main {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        h1 {
+            font-size: 28px;
+            margin-bottom: 20px;
+            color: #4CAF50;
+        }
+
+        h2 {
+            font-size: 20px;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+        }
+
+        input[type="file"], input[type="number"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            padding: 10px 15px;
+            border-radius: 4px;
+            font-size: 16px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            padding: 10px;
+            border-radius: 4px;
+            background-color: #dff0d8;
+            color: #3c763d;
+            font-size: 14px;
+        }
+
+        footer {
+            text-align: center;
+            margin-top: 20px;
+            font-size: 14px;
+            color: #888;
+        }
+
+        .social-buttons button {
+            margin: 5px;
+            background-color: #007bff;
+        }
+
+        .social-buttons button:hover {
+            background-color: #0056b3;
+        }
+
+        .social-buttons button:nth-child(2) {
+            background-color: #0e76a8;
+        }
+
+        .social-buttons button:nth-child(2):hover {
+            background-color: #084a71;
+        }
+
+        .social-buttons {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
 </head>
 <body>
-    <h1>PDF Utilities</h1>
-    
-    {% with messages = get_flashed_messages() %}
-        {% if messages %}
-            <ul>
-                {% for message in messages %}
-                    <li>{{ message }}</li>
-                {% endfor %}
-            </ul>
-        {% endif %}
-    {% endwith %}
-    
-    <h2>Count Pages</h2>
-    <form action="/count_pages" method="post" enctype="multipart/form-data">
-        <input type="file" name="pdf_files" multiple>
-        <button type="submit">Count Pages</button>
-    </form>
+    <header>
+        PDF Utilities
+    </header>
+    <main>
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                <div class="message">
+                    {% for message in messages %}
+                        <p>{{ message }}</p>
+                    {% endfor %}
+                </div>
+            {% endif %}
+        {% endwith %}
 
-    <h2>Rotate Page</h2>
-    <form action="/rotate_page" method="post" enctype="multipart/form-data">
-        <input type="file" name="pdf_file" required>
-        <label for="angle">Enter rotation angle:</label>
-        <input type="number" name="angle" required>
-        <label for="page">Which page to rotate?</label>
-        <input type="number" name="page" required>
-        <button type="submit">Rotate Page</button>
-    </form>
+        <h1>Manage Your PDFs Easily</h1>
 
-    <h2>Merge PDFs</h2>
-    <form action="/merge_pdfs" method="post" enctype="multipart/form-data">
-        <input type="file" name="pdf_files" multiple>
-        <button type="submit">Merge PDFs</button>
-    </form>
+        <h2>Count Pages</h2>
+        <form action="/count_pages" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" name="pdf_files" multiple>
+            </div>
+            <button type="submit">Count Pages</button>
+        </form>
 
-    <h2>Social Media</h2>
-    <button onclick="window.open('https://github.com/vvvv5215', '_blank')">GitHub</button>
-    <button onclick="window.open('https://www.linkedin.com/in/vishwanth-venkatasubramanian-38a731318/', '_blank')">LinkedIn</button>
+        <h2>Rotate Page</h2>
+        <form action="/rotate_page" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <label for="pdf_file">Upload PDF</label>
+                <input type="file" name="pdf_file" required>
+            </div>
+            <div class="form-group">
+                <label for="angle">Enter Rotation Angle</label>
+                <input type="number" name="angle" required>
+            </div>
+            <div class="form-group">
+                <label for="page">Page Number</label>
+                <input type="number" name="page" required>
+            </div>
+            <button type="submit">Rotate Page</button>
+        </form>
+
+        <h2>Merge PDFs</h2>
+        <form action="/merge_pdfs" method="post" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" name="pdf_files" multiple>
+            </div>
+            <button type="submit">Merge PDFs</button>
+        </form>
+
+        <div class="social-buttons">
+            <button onclick="window.open('https://github.com/vvvv5215', '_blank')">GitHub</button>
+            <button onclick="window.open('https://www.linkedin.com/in/vishwanth-venkatasubramanian-38a731318/', '_blank')">LinkedIn</button>
+        </div>
+    </main>
+    <footer>
+        &copy; 2024 PDF Utilities. All rights reserved.
+    </footer>
 </body>
 </html>
-
