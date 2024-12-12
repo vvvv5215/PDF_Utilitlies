@@ -1,5 +1,3 @@
-flask
-werkzeug.utils
-os
-webbrowser
+Flask
 PyPDF2
+Werkzeug
