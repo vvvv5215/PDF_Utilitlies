@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PDF Utilities</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <h1>PDF Utilities</h1>
+    
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            <ul>
+                {% for message in messages %}
+                    <li>{{ message }}</li>
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+    
+    <h2>Count Pages</h2>
+    <form action="/count_pages" method="post" enctype="multipart/form-data">
+        <input type="file" name="pdf_files" multiple>
+        <button type="submit">Count Pages</button>
+    </form>
+
+    <h2>Rotate Page</h2>
+    <form action="/rotate_page" method="post" enctype="multipart/form-data">
+        <input type="file" name="pdf_file" required>
+        <label for="angle">Enter rotation angle:</label>
+        <input type="number" name="angle" required>
+        <label for="page">Which page to rotate?</label>
+        <input type="number" name="page" required>
+        <button type="submit">Rotate Page</button>
+    </form>
+
+    <h2>Merge PDFs</h2>
+    <form action="/merge_pdfs" method="post" enctype="multipart/form-data">
+        <input type="file" name="pdf_files" multiple>
+        <button type="submit">Merge PDFs</button>
+    </form>
+
+    <h2>Social Media</h2>
+    <button onclick="window.open('https://github.com/vvvv5215', '_blank')">GitHub</button>
+    <button onclick="window.open('https://www.linkedin.com/in/vishwanth-venkatasubramanian-38a731318/', '_blank')">LinkedIn</button>
+</body>
+</html>
