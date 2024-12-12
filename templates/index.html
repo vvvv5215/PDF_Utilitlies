@@ -21,6 +21,7 @@
             padding: 20px 10px;
             text-align: center;
             font-size: 24px;
+            box-shadow: 0 0 20px rgba(45, 95, 128, 0.5); /* subtle glowing effect */
         }
 
         main {
@@ -64,13 +65,12 @@
             border-radius: 4px;
             background-color: #2a2a2a; /* dark background */
             color: #e0e0e0;
-            box-shadow: 0 0 5px rgba(0, 255, 255, 0.3); /* subtle glow effect */
         }
 
         input[type="file"]:focus, input[type="number"]:focus {
             outline: none;
             border-color: #2d5f80; /* darker blue on focus */
-            box-shadow: 0 0 10px rgba(45, 95, 128, 0.7); /* subtle glowing effect */
+            box-shadow: 0 0 10px rgba(45, 95, 128, 0.7); /* glowing effect */
         }
 
         button {
@@ -81,12 +81,12 @@
             border-radius: 4px;
             font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 0 5px rgba(45, 95, 128, 0.6); /* subtle glow */
+            box-shadow: 0 0 5px rgba(45, 95, 128, 0.4); /* subtle glow effect */
         }
 
         button:hover {
             background-color: #234a68; /* darker blue on hover */
-            box-shadow: 0 0 10px rgba(45, 95, 128, 1); /* stronger glow */
+            box-shadow: 0 0 10px rgba(45, 95, 128, 0.7); /* stronger glow effect */
         }
 
         .message {
@@ -96,7 +96,6 @@
             background-color: #333333; /* dark background for message */
             color: #2d5f80; /* darker blue text */
             font-size: 14px;
-            box-shadow: 0 0 5px rgba(45, 95, 128, 0.3); /* subtle glow */
         }
 
         footer {
