@@ -145,5 +145,4 @@ def merge_pdfs_to_stream(file_paths):
 
 # Expose the app callable for Vercel
 if __name__ == '__main__':
-    app.run(debug=True, port=5001)
-
+    app.run(debug=True, port=5001)
