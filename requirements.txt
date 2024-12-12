@@ -1,0 +1,5 @@
+flask
+werkzeug.utils
+os
+webbrowser
+PyPDF2
