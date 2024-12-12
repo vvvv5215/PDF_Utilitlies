@@ -17,11 +17,10 @@
 
         header {
             background-color: #222222; /* dark grey background */
-            color: #00f5e8; /* neon cyan text */
+            color: #2d5f80; /* darker blue */
             padding: 20px 10px;
             text-align: center;
             font-size: 24px;
-            text-shadow: 0 0 10px #00f5e8; /* glowing effect */
         }
 
         main {
@@ -30,22 +29,20 @@
             padding: 20px;
             background: #121212; /* almost black background */
             border-radius: 8px;
-            box-shadow: 0 4px 10px rgba(0, 255, 255, 0.1); /* subtle glow */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2); /* subtle shadow */
         }
 
         h1 {
             font-size: 28px;
             margin-bottom: 20px;
-            color: #00f5e8; /* neon cyan */
-            text-shadow: 0 0 10px #00f5e8;
+            color: #2d5f80; /* darker blue */
         }
 
         h2 {
             font-size: 20px;
             margin-top: 20px;
             margin-bottom: 10px;
-            color: #00f5e8; /* neon cyan */
-            text-shadow: 0 0 10px #00f5e8;
+            color: #2d5f80; /* darker blue */
         }
 
         .form-group {
@@ -67,29 +64,29 @@
             border-radius: 4px;
             background-color: #2a2a2a; /* dark background */
             color: #e0e0e0;
-            box-shadow: 0 0 5px rgba(0, 255, 255, 0.5); /* glowing border */
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.3); /* subtle glow effect */
         }
 
         input[type="file"]:focus, input[type="number"]:focus {
             outline: none;
-            border-color: #00f5e8; /* neon cyan border on focus */
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8); /* glowing effect */
+            border-color: #2d5f80; /* darker blue on focus */
+            box-shadow: 0 0 10px rgba(45, 95, 128, 0.7); /* subtle glowing effect */
         }
 
         button {
-            background-color: #00f5e8; /* neon cyan */
-            color: #222222; /* dark text */
+            background-color: #2d5f80; /* darker blue */
+            color: white;
             border: none;
             padding: 10px 15px;
             border-radius: 4px;
             font-size: 16px;
             cursor: pointer;
-            box-shadow: 0 0 5px rgba(0, 255, 255, 0.8); /* glowing button */
+            box-shadow: 0 0 5px rgba(45, 95, 128, 0.6); /* subtle glow */
         }
 
         button:hover {
-            background-color: #00e6cc; /* brighter cyan on hover */
-            box-shadow: 0 0 15px rgba(0, 255, 255, 1);
+            background-color: #234a68; /* darker blue on hover */
+            box-shadow: 0 0 10px rgba(45, 95, 128, 1); /* stronger glow */
         }
 
         .message {
@@ -97,9 +94,9 @@
             padding: 10px;
             border-radius: 4px;
             background-color: #333333; /* dark background for message */
-            color: #00f5e8; /* neon cyan text */
+            color: #2d5f80; /* darker blue text */
             font-size: 14px;
-            box-shadow: 0 0 5px rgba(0, 255, 255, 0.3); /* glowing effect */
+            box-shadow: 0 0 5px rgba(45, 95, 128, 0.3); /* subtle glow */
         }
 
         footer {
@@ -116,12 +113,12 @@
             border: none;
             padding: 10px 15px;
             border-radius: 4px;
-            box-shadow: 0 0 5px rgba(0, 255, 255, 0.4); /* glowing blue */
+            box-shadow: 0 0 5px rgba(0, 255, 255, 0.4); /* subtle glow */
         }
 
         .social-buttons button:hover {
             background-color: #0056b3; /* darker blue on hover */
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* glowing blue on hover */
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.7); /* stronger glow */
         }
 
         .social-buttons button:nth-child(2) {
@@ -130,7 +127,7 @@
 
         .social-buttons button:nth-child(2):hover {
             background-color: #084a71;
-            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); /* glowing LinkedIn effect */
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.6); /* subtle glow effect */
         }
 
         .social-buttons {
