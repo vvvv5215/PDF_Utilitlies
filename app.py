@@ -22,7 +22,7 @@ def count_pages():
         flash('No files selected')
         return redirect(url_for('index'))
 
-    result_text = ""
+    result_texts = []
     for file in files:
         try:
             filename = secure_filename(file.filename)
@@ -31,16 +31,14 @@ def count_pages():
 
             num_pages = process_pdf(file_path)
             if num_pages > 0:
-                result_text += f"Selected file: {filename}\n"
-                result_text += f'The PDF file has {num_pages} pages.'
+                result_texts.append(f"Selected file: {filename}<br>The PDF file has {num_pages} pages.<br>")
             else:
-                result_text += f"Could not read the file: {filename}.\n"
+                result_texts.append(f"Could not read the file: {filename}.<br>")
         except Exception as e:
-            result_text += f"An error occurred with the file: {file.filename}. Error: {e}\n"
+            result_texts.append(f"An error occurred with the file: {file.filename}. Error: {e}<br>")
 
-    flash(result_text)
+    flash("".join(result_texts))
     return redirect(url_for('index'))
-
 
 @app.route('/rotate_page', methods=['POST'])
 def rotate_page():
