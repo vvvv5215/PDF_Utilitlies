@@ -3,7 +3,7 @@ from werkzeug.utils import secure_filename
 import os
 import PyPDF2
 import webbrowser
-
+#flask used
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 app.config['UPLOAD_FOLDER'] = 'uploads/'
