@@ -22,6 +22,7 @@
             text-align: center;
             font-size: 24px;
             box-shadow: 0 0 20px rgba(0, 123, 255, 0.5); 
+            margin-bottom: 20px; /* Add space below header */
         }
 
         main {
@@ -35,14 +36,13 @@
 
         h1 {
             font-size: 28px;
-            margin-bottom: 20px;
+            margin: 20px 0; /* Add margin above and below */
             color: #007bff; /* GitHub */
         }
 
         h2 {
             font-size: 20px;
-            margin-top: 20px;
-            margin-bottom: 10px;
+            margin: 20px 0; /* Add margin above and below */
             color: #007bff; /*GitHub*/
         }
 
@@ -82,6 +82,7 @@
             font-size: 14px; 
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.4); 
+            margin: 10px 0; /* Add margin above and below */
         }
 
         button:hover {
@@ -125,14 +126,19 @@
         }
 
         .social-buttons button:nth-child(2):hover {
-            background-color: #0056b3; 
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.6); 
+            background-color: #0056b3; /* darker blue on hover */
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.6); /* stronger glow effect */
         }
 
         .social-buttons {
             display: flex;
             justify-content: center;
             margin-top: 20px;
+        }
+
+        /* Additional spacing */
+        .spacer {
+            margin-bottom: 20px;
         }
     </style>
 </head>
@@ -145,14 +151,15 @@
             {% if messages %}
                 <div class="message">
                     {% for message in messages %}
-                        <p>{{ message }}</p>
+                        <p>{{ message|safe }}</p> <!-- Use the safe filter here -->
+                        <div class="spacer"></div> <!-- Add spacing between messages -->
                     {% endfor %}
                 </div>
             {% endif %}
         {% endwith %}
-
+        <div class="spacer"></div>
         <h1>Work with your PDFs here!</h1>
-
+        <div class="spacer"></div>
         <h2>Count Pages</h2>
         <form action="/count_pages" method="post" enctype="multipart/form-data">
             <div class="form-group">
@@ -160,11 +167,11 @@
             </div>
             <button type="submit">Count</button>
         </form>
-
+        <div class="spacer"></div>
         <h2>Rotate Page</h2>
         <form action="/rotate_page" method="post" enctype="multipart/form-data">
             <div class="form-group">
-                <label for="pdf_file">Upload PDF</label>
+                
                 <input type="file" name="pdf_file" required>
             </div>
             <div class="form-group">
@@ -177,7 +184,7 @@
             </div>
             <button type="submit">Rotate</button>
         </form>
-
+        <div class="spacer"></div>
         <h2>Merge PDFs</h2>
         <form action="/merge_pdfs" method="post" enctype="multipart/form-data">
             <div class="form-group">
@@ -185,7 +192,7 @@
             </div>
             <button type="submit">Merge</button>
         </form>
-
+        <div class="spacer"></div>
         <div class="social-buttons">
             <button onclick="window.open('https://github.com/vvvv5215', '_blank')">GitHub</button>
             <button onclick="window.open('https://www.linkedin.com/in/vishwanth-venkatasubramanian-38a731318/', '_blank')">LinkedIn</button>
