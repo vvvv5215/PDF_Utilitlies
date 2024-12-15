@@ -1,16 +1,8 @@
-
-from flask import Flask, render_template, request, redirect, url_for, flash, send_file
-from werkzeug.utils import secure_filename
-import os
-import PyPDF2
+from flask import Flask, render_template, request, jsonify, send_file
+from PyPDF2 import PdfReader, PdfWriter
 import io
 
 app = Flask(__name__)
-app.secret_key = "supersecretkey"
-app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
-
-app.config['UPLOAD_FOLDER'] = '/tmp/uploads/'
-os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 @app.route('/')
 def index():
@@ -18,124 +10,84 @@ def index():
 
 @app.route('/count_pages', methods=['POST'])
 def count_pages():
-    files = request.files.getlist('pdf_files')
-    if not files or files[0].filename == '':
-        flash('No files selected')
-        return redirect(url_for('index'))
+    pdf_files = request.files.getlist('pdf_files')  # Handle multiple files
+    results = []
 
-    result_texts = []
-    for file in files:
-        try:
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
+    try:
+        for pdf_file in pdf_files:
+            # Read the PDF
+            reader = PdfReader(pdf_file)
+            num_pages = len(reader.pages)
+            results.append(f"File: {pdf_file.filename} has {num_pages} pages.")
 
-            num_pages = process_pdf(file_path)
-            if num_pages > 0:
-                result_texts.append(f"Selected file: {filename}<br>The PDF file has {num_pages} pages.<br>")
-            else:
-                result_texts.append(f"Could not read the file: {filename}.<br>")
-        except Exception as e:
-            result_texts.append(f"An error occurred with the file: {file.filename}. Error: {e}<br>")
-
-    flash("".join(result_texts))
-    return redirect(url_for('index'))
+        # Return results as a list of messages
+        return jsonify({'results': results})
+    except Exception as e:
+        return jsonify({'error': f'Error: {str(e)}'}), 400
 
 @app.route('/rotate_page', methods=['POST'])
 def rotate_page():
-    file = request.files['pdf_file']
-    if not file or file.filename == '':
-        flash('No file selected')
-        return redirect(url_for('index'))
-
     try:
-        rotation_angle = int(request.form['angle'])
-        pageno = int(request.form['page']) - 1
+        pdf_file = request.files['pdf_file']
+        angle = int(request.form['angle'])
+        pages = request.form['pages']
 
-        filename = secure_filename(file.filename)
-        file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-        file.save(file_path)
+        print(f"Processing file: {pdf_file.filename}, Angle: {angle}, Pages: {pages}")
+        page_numbers = parse_page_numbers(pages)
 
-        rotated_pdf_stream = rotate_pdf_to_stream(file_path, rotation_angle, pageno)
-        return send_file(
-            rotated_pdf_stream,
-            as_attachment=True,
-            download_name=f"rotated_{filename}",
-            mimetype="application/pdf"
-        )
+        reader = PdfReader(pdf_file)
+        writer = PdfWriter()
+
+        for i, page in enumerate(reader.pages):
+            if i in page_numbers:
+                page.rotate(angle)
+            writer.add_page(page)
+
+        output_pdf_stream = io.BytesIO()
+        writer.write(output_pdf_stream)
+        output_pdf_stream.seek(0)
+
+        print(f"Rotated PDF generated. Size: {output_pdf_stream.tell()} bytes")
+        return send_file(output_pdf_stream, as_attachment=True, download_name="rotated_output.pdf", mimetype='application/pdf')
+
     except Exception as e:
-        flash(f"An error occurred: {str(e)}")
-        return redirect(url_for('index'))
+        print(f"Error: {e}")
+        return jsonify({'error': f'Error: {str(e)}'}), 400
 
 @app.route('/merge_pdfs', methods=['POST'])
 def merge_pdfs():
     files = request.files.getlist('pdf_files')
-    if not files or files[0].filename == '':
-        flash('No files selected')
-        return redirect(url_for('index'))
-
+    writer = PdfWriter()
     try:
-        file_paths = []
-        for file in files:
-            filename = secure_filename(file.filename)
-            file_path = os.path.join(app.config['UPLOAD_FOLDER'], filename)
-            file.save(file_path)
-            file_paths.append(file_path)
+        for pdf in files:
+            reader = PdfReader(pdf)
+            for page in reader.pages:
+                writer.add_page(page)
 
-        merged_pdf_stream = merge_pdfs_to_stream(file_paths)
+        output_pdf_stream = io.BytesIO()
+        writer.write(output_pdf_stream)
+        output_pdf_stream.seek(0)
 
-        return send_file(
-            merged_pdf_stream,
-            as_attachment=True,
-            download_name="merged_output.pdf",
-            mimetype="application/pdf"
-        )
+        print(f"Merged PDF generated. Size: {output_pdf_stream.tell()} bytes")
+        return send_file(output_pdf_stream, as_attachment=True, download_name="merged_output.pdf", mimetype='application/pdf')
     except Exception as e:
-        flash(f"An error occurred: {str(e)}")
-        return redirect(url_for('index'))
+        print(f"Error: {e}")
+        return jsonify({'error': f'Error: {str(e)}'}), 400
 
-def process_pdf(file_path):
-    try:
-        with open(file_path, 'rb') as f:
-            pdf = PyPDF2.PdfReader(f)
-            num_pages = len(pdf.pages)
-            return num_pages
-    except Exception as e:
-        print(f"Error processing PDF file: {file_path}. Error: {e}")
-        return 0
 
-def rotate_pdf_to_stream(file_path, angle, pageno):
-    try:
-        with open(file_path, 'rb') as f:
-            pdf = PyPDF2.PdfReader(f)
-            output_pdf = PyPDF2.PdfWriter()
-            
-            for page_num in range(len(pdf.pages)):
-                page = pdf.pages[page_num]
-                if page_num == pageno:
-                    page.rotate(angle)
-                output_pdf.add_page(page)
-            output_stream = io.BytesIO()
-            output_pdf.write(output_stream)
-            output_stream.seek(0)
-            return output_stream
-    except Exception as e:
-        print(f"Error rotating PDF: {file_path}. Error: {e}")
-        raise
-
-def merge_pdfs_to_stream(file_paths):
-    output_pdf = PyPDF2.PdfWriter()
-    output_stream = io.BytesIO()
-
-    for file_path in file_paths:
-        with open(file_path, 'rb') as f:
-            pdf = PyPDF2.PdfReader(f)
-            for page_num in range(len(pdf.pages)):
-                output_pdf.add_page(pdf.pages[page_num])
-
-    output_pdf.write(output_stream)
-    output_stream.seek(0)
-    return output_stream
+def parse_page_numbers(pages):
+    """
+    Parse page numbers from a string like "1,2,3-5".
+    Returns a set of zero-based page indices.
+    """
+    page_numbers = set()
+    for part in pages.split(','):
+        if '-' in part:
+            start, end = map(int, part.split('-'))
+            page_numbers.update(range(start - 1, end))
+        else:
+            page_numbers.add(int(part) - 1)
+    return page_numbers
 
 if __name__ == '__main__':
-    app.run(debug=True,port=5001)
+    app.run(debug=True)
