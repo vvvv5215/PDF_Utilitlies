@@ -7,10 +7,10 @@ import io
 app = Flask(__name__)
 app.secret_key = "supersecretkey"
 
-
+# Use the /tmp directory for temporary storage in a serverless environment
 app.config['UPLOAD_FOLDER'] = '/tmp/uploads/'
 os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
-#returning render
+
 @app.route('/')
 def index():
     return render_template('index.html')
@@ -57,7 +57,7 @@ def rotate_page():
 
         rotated_pdf_stream = rotate_pdf_to_stream(file_path, rotation_angle, pageno)
 
-        
+        # Return the rotated PDF as a file download
         return send_file(
             rotated_pdf_stream,
             as_attachment=True,
@@ -85,7 +85,7 @@ def merge_pdfs():
 
         merged_pdf_stream = merge_pdfs_to_stream(file_paths)
 
-        
+        # Return the merged PDF as a file download
         return send_file(
             merged_pdf_stream,
             as_attachment=True,
@@ -118,7 +118,7 @@ def rotate_pdf_to_stream(file_path, angle, pageno):
                     page.rotate(angle)
                 output_pdf.add_page(page)
 
-            # save the pdf
+            # Save the rotated PDF to an in-memory stream
             output_stream = io.BytesIO()
             output_pdf.write(output_stream)
             output_stream.seek(0)
@@ -141,6 +141,6 @@ def merge_pdfs_to_stream(file_paths):
     output_stream.seek(0)
     return output_stream
 
-# making it callable
+# Expose the app callable for Vercel
 if __name__ == '__main__':
     app.run(debug=True, port=5001)
