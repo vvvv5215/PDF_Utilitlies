@@ -22,7 +22,7 @@
             text-align: center;
             font-size: 24px;
             box-shadow: 0 0 20px rgba(0, 123, 255, 0.5); 
-            margin-bottom: 20px; /* Add space below header */
+            margin-bottom: 20px; 
         }
 
         main {
@@ -36,13 +36,13 @@
 
         h1 {
             font-size: 28px;
-            margin: 20px 0; /* Add margin above and below */
+            margin: 20px 0;
             color: #007bff; /* GitHub */
         }
 
         h2 {
             font-size: 20px;
-            margin: 20px 0; /* Add margin above and below */
+            margin: 20px 0; 
             color: #007bff; /*GitHub*/
         }
 
@@ -82,7 +82,7 @@
             font-size: 14px; 
             cursor: pointer;
             box-shadow: 0 0 5px rgba(0, 123, 255, 0.4); 
-            margin: 10px 0; /* Add margin above and below */
+            margin: 10px 0; 
         }
 
         button:hover {
@@ -122,12 +122,12 @@
         }
 
         .social-buttons button:nth-child(2) {
-            background-color: #007bff; /* LinkedIn */
+            background-color: #007bff; /* Linkedin */
         }
 
         .social-buttons button:nth-child(2):hover {
-            background-color: #0056b3; /* darker blue on hover */
-            box-shadow: 0 0 10px rgba(0, 123, 255, 0.6); /* stronger glow effect */
+            background-color: #0056b3; 
+            box-shadow: 0 0 10px rgba(0, 123, 255, 0.6); /* glow */
         }
 
         .social-buttons {
@@ -136,7 +136,7 @@
             margin-top: 20px;
         }
 
-        /* Additional spacing */
+       
         .spacer {
             margin-bottom: 20px;
         }
@@ -151,8 +151,8 @@
             {% if messages %}
                 <div class="message">
                     {% for message in messages %}
-                        <p>{{ message|safe }}</p> <!-- Use the safe filter here -->
-                        <div class="spacer"></div> <!-- Add spacing between messages -->
+                        <p>{{ message|safe }}</p> 
+                        <div class="spacer"></div> 
                     {% endfor %}
                 </div>
             {% endif %}
