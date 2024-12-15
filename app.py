@@ -1,11 +1,13 @@
 
 from flask import Flask, render_template, request, redirect, url_for, flash, send_file
+from flask_cors import CORS
 from werkzeug.utils import secure_filename
 import os
 import PyPDF2
 import io
 
 app = Flask(__name__)
+CORS(app)
 app.secret_key = "supersecretkey"
 app.config['MAX_CONTENT_LENGTH'] = 100 * 1024 * 1024
 
