@@ -117,6 +117,15 @@
         </form>
         <div id="countResult" class="message" style="display:none;"></div>
 
+        <h2>Merge PDFs</h2>
+        <form id="mergeForm" enctype="multipart/form-data">
+            <div class="form-group">
+                <input type="file" name="pdf_files" multiple>
+            </div>
+            <button type="submit">Merge</button>
+        </form>
+        <div id="mergeResult" class="message" style="display:none;"></div>
+
         <h2>Rotate Pages</h2>
         <form id="rotateForm" enctype="multipart/form-data">
             <div class="form-group">
@@ -133,15 +142,6 @@
             <button type="submit">Rotate</button>
         </form>
         <div id="rotateResult" class="message" style="display:none;"></div>
-
-        <h2>Merge PDFs</h2>
-        <form id="mergeForm" enctype="multipart/form-data">
-            <div class="form-group">
-                <input type="file" name="pdf_files" multiple>
-            </div>
-            <button type="submit">Merge</button>
-        </form>
-        <div id="mergeResult" class="message" style="display:none;"></div>
     </main>
     <footer>
         &copy; PDF Tools! All rights reserved :)
@@ -172,39 +172,7 @@
                     }
                 });
             });
-    
-            // Handle rotate pages
-            $('#rotateForm').submit(function (e) {
-                e.preventDefault();
-                let formData = new FormData(this);
-                $.ajax({
-                    url: '/rotate_page',
-                    type: 'POST',
-                    data: formData,
-                    contentType: false,
-                    processData: false,
-                    xhrFields: {
-                        responseType: 'blob'  // Expect a binary file
-                    },
-                    success: function (response) {
-                        const blob = new Blob([response], { type: 'application/pdf' });
-                        const url = window.URL.createObjectURL(blob);
-                        const a = document.createElement('a');
-                        a.href = url;
-                        a.download = 'rotated_output.pdf';
-                        document.body.appendChild(a);
-                        a.click();
-                        document.body.removeChild(a);
-                        window.URL.revokeObjectURL(url);
-                        alert('Your rotated PDF has been downloaded successfully!');
-                    },
-                    error: function (response) {
-                        $('#rotateResult').html('Error: ' + response.responseJSON.error).show();
-                    }
-                });
-            });
 
-    
             // Handle merge PDFs
             $('#mergeForm').submit(function (e) {
                 e.preventDefault();
@@ -232,6 +200,37 @@
                     },
                     error: function (response) {
                         $('#mergeResult').html('Error: ' + response.responseJSON.error).show();
+                    }
+                });
+            });
+
+            // Handle rotate pages
+            $('#rotateForm').submit(function (e) {
+                e.preventDefault();
+                let formData = new FormData(this);
+                $.ajax({
+                    url: '/rotate_page',
+                    type: 'POST',
+                    data: formData,
+                    contentType: false,
+                    processData: false,
+                    xhrFields: {
+                        responseType: 'blob'  // Expect a binary file
+                    },
+                    success: function (response) {
+                        const blob = new Blob([response], { type: 'application/pdf' });
+                        const url = window.URL.createObjectURL(blob);
+                        const a = document.createElement('a');
+                        a.href = url;
+                        a.download = 'rotated_output.pdf';
+                        document.body.appendChild(a);
+                        a.click();
+                        document.body.removeChild(a);
+                        window.URL.revokeObjectURL(url);
+                        alert('Your rotated PDF has been downloaded successfully!');
+                    },
+                    error: function (response) {
+                        $('#rotateResult').html('Error: ' + response.responseJSON.error).show();
                     }
                 });
             });
